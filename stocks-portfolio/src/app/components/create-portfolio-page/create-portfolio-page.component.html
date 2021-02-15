@@ -1,0 +1,63 @@
+<div class="mt-5 d-flex flex-row align-items-center justify-content-center" *ngIf="!isLoaded">
+    <p-progressSpinner></p-progressSpinner>
+</div>
+<div *ngIf="isLoaded">
+    <div class="third-page-section" *ngIf="user.portfolioID.length == 0">
+        <h1 class="section-title">Stocks Portfolio Creation</h1>
+        <p class="my-3">Create a stock portfolio to start tracking your profits and view other students on the scoreboard!</p>
+        <div class="row mt-5">
+            <div class="col-lg-12 p-0 d-flex flex-row align-items-center justify-content-center">
+                <div class="p-fluid w-100">
+                    <div class="row mb-5">
+                        <div class="col-lg-4 p-field mb-4">
+                            <label>First Stock Name</label>
+                            <input [(ngModel)]="portfolio['stocks'][0]['name']" type="text" pInputText> 
+                        </div>
+                        <div class="col-lg-4 p-field mb-4">
+                            <label>First Stock Closing Price</label>
+                            <p-inputNumber [(ngModel)]="portfolio['stocks'][0]['price']" currency="USD" mode="currency" inputId="currency-us" locale="en-US"></p-inputNumber>
+                        </div>
+                        <div class="col-lg-4 p-field mb-4">
+                            <label>First Stock Symbol</label>
+                            <input [(ngModel)]="portfolio['stocks'][0]['symbol']" type="text" pInputText> 
+                        </div>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="col-lg-4 p-field mb-4">
+                            <label>Second Stock Name</label>
+                            <input [(ngModel)]="portfolio['stocks'][1]['name']" type="text" pInputText> 
+                        </div>
+                        <div class="col-lg-4 p-field mb-4">
+                            <label>Second Stock Closing Price</label>
+                            <p-inputNumber [(ngModel)]="portfolio['stocks'][1]['price']" currency="USD" mode="currency" inputId="currency-us" locale="en-US"></p-inputNumber>
+                        </div>
+                        <div class="col-lg-4 p-field mb-4">
+                            <label>Second Stock Symbol</label>
+                            <input [(ngModel)]="portfolio['stocks'][1]['symbol']" type="text" pInputText> 
+                        </div>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="col-lg-4 p-field mb-4">
+                            <label>Third Stock Name</label>
+                            <input [(ngModel)]="portfolio['stocks'][2]['name']" type="text" pInputText> 
+                        </div>
+                        <div class="col-lg-4 p-field mb-4">
+                            <label>Third Stock Closing Price</label>
+                            <p-inputNumber [(ngModel)]="portfolio['stocks'][2]['price']" currency="USD" mode="currency" inputId="currency-us" locale="en-US"></p-inputNumber>
+                        </div>
+                        <div class="col-lg-4 p-field mb-4">
+                            <label>Third Stock Symbol</label>
+                            <input [(ngModel)]="portfolio['stocks'][2]['symbol']" type="text" pInputText> 
+                        </div>
+                    </div>
+                    <div class="p-field mb-4 d-flex flex-row align-items-center justify-content-end">
+                        <button style="width: auto;" pButton pRipple label="Create" (click)="createPortfolio()"  class="p-button-outlined mr-4"></button>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="user.portfolioID.length != 0" class="mt-5 d-flex flex-row align-items-center justify-content-center">
+        <h1 class="text-danger text-center"><i class="fa fa-frown"></i> You have landed somewhere where you shouldn't be.  Go somewhere else, please.</h1>
+    </div>
+</div>

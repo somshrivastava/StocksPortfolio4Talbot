@@ -1,0 +1,14 @@
+.footer {   
+    border-top: 2px solid $dark;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    padding: 2.5rem;
+    display: flex;
+
+    &-title {
+        text-align: center;
+        color: $dark;
+        font-size: 1.5rem;
+    }
+}

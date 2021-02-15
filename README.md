@@ -1,29 +1,93 @@
-# README #
+npm run-script lint
+npm run-script build
+firebase serve --only functions
 
-This README would normally document whatever steps are necessary to get your application up and running.
+firebase target:apply hosting dev-stocksportfolio4talbot dev-stocksportfolio4talbot
+firebase deploy --only hosting:dev-stocksportfolio4talbot
 
-### What is this repository for? ###
+{
+  "hosting": {
+    "target": "dev-stocksportfolio4talbot",
+    "public": "stocks-portfolio",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [ {
+      "source": "**",
+      "destination": "/index.html"
+    } ],
+    "headers": [
+      {
+        "source": "**/*.@(js|html)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-store, max-age=0"
+          }
+        ]
+      }
+    ]
+  }
+}
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+firebase target:apply hosting staging-stocksportfolio4talbot staging-stocksportfolio4talbot
+firebase deploy --only hosting:staging-stocksportfolio4talbot
 
-### How do I get set up? ###
+{
+  "hosting": {
+    "target": "staging-stocksportfolio4talbot",
+    "public": "stocks-portfolio",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [ {
+      "source": "**",
+      "destination": "/index.html"
+    } ],
+    "headers": [
+      {
+        "source": "**/*.@(js|html)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-store, max-age=0"
+          }
+        ]
+      }
+    ]
+  }
+}
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+firebase target:apply hosting stocksportfolio4talbot stocksportfolio4talbot
+firebase deploy --only hosting:stocksportfolio4talbot
 
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+{
+  "hosting": {
+    "target": "stocksportfolio4talbot",
+    "public": "stocks-portfolio",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [ {
+      "source": "**",
+      "destination": "/index.html"
+    } ],
+    "headers": [
+      {
+        "source": "**/*.@(js|html)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-store, max-age=0"
+          }
+        ]
+      }
+    ]
+  }
+}

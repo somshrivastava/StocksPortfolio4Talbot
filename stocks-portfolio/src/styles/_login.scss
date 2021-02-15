@@ -1,0 +1,41 @@
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    & .login {
+        min-height: 100vh;
+        min-width: 100%;
+        border-radius: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: $dark;
+    
+        &-title {
+            color: $accent;
+            font-size: 4rem;
+            padding: 0 5rem;
+            margin-bottom: 5rem;
+            padding-bottom: 5rem;
+            border-bottom: 2px solid $accent;
+        }
+    
+        &-button { 
+            font-size: 2rem;
+            background: $gray;
+            color: $white;
+            padding: 2rem;
+            border-radius: 0.25rem;
+            transition: all 0.25s ease-in-out;
+    
+            &:hover {
+                background: rgba($accent, 0.75);
+                color: $white;
+            }
+        }
+    }
+}

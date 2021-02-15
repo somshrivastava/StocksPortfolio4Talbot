@@ -1,0 +1,93 @@
+<div *ngIf="!isLoaded" class="mt-5 d-flex flex-row align-items-center justify-content-center">
+    <p-progressSpinner></p-progressSpinner>
+</div>
+<div *ngIf="isLoaded">
+    <div *ngIf="user.portfolioID.length != 0 && !userService.isAdminUser(user.email)">
+        <div class="card m-4 p-4">
+            <h3 class="mb-3 text-danger"><i class="fas fa-exclamation-triangle"></i> Please Note: All Prices Shown Are Of The Previous Close!</h3>
+        </div>
+        <div class="card m-4 p-4">
+            <h3 *ngIf="stocksService.returnTotalProfit(stocks) < 0" class="mb-3 text-danger"><i class="fa fa-frown"></i> So sorry for your loss, it seems you're losing money as of now.</h3>
+            <h3 *ngIf="stocksService.returnTotalProfit(stocks) > 0" class="mb-3 text-success"><i class="fa fa-smile"></i> Congrats, you are making a profit from your stocks currently!</h3>
+            <h3 [class.text-success]="stocksService.returnTotalProfit(stocks) > 0" [class.text-danger]="stocksService.returnTotalProfit(stocks) < 0">Total Profit: ${{stocksService.returnTotalProfit(stocks) | number: '0.2'}}</h3>
+        </div>
+        <div class="card m-4 p-4">
+            <h1 class="section-title">Stocks Information & Profits</h1>
+            <p-table scrollHeight="100rem" [scrollable]="true" [rows]="10" [value]="stocks" [rowHover]="true">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 10rem;">
+                            <span>
+                                Stock
+                            </span>
+                        </th>
+                        <th style="width: 10rem;">
+                            <span>
+                                Symbol
+                            </span>
+                        </th>
+                        <th style="width: 10rem;">
+                            <span>
+                                Buy Price
+                            </span>
+                        </th>
+                        <th style="width: 10rem;">
+                            <span>
+                                Shares
+                            </span>
+                        </th>
+                        <th style="width: 10rem;">
+                            <span>
+                                Current Price
+                            </span>
+                        </th>
+                        <th style="width: 10rem;">
+                            <span>
+                                Current Profit
+                            </span>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-index="rowIndex" let-stock>
+                    <tr [pReorderableRow]="index">
+                        <td style="width: 10rem;">
+                            {{stock['name']}}
+                        </td>
+                        <td style="width: 10rem;">
+                            {{stock['symbol']}}
+                        </td>
+                        <td style="width: 10rem;">
+                            ${{stock['price']}}
+                        </td>
+                        <td style="width: 10rem;">
+                            {{stocksService.returnShares(stock['price']) | number: '0.2'}}
+                        </td>
+                        <td style="width: 10rem;">
+                            ${{stocksService.returnCurrentPrice(stocks, stock) | number: '0.2'}}
+                        </td>
+                        <td style="width: 10rem;">
+                            ${{stocksService.returnCurrentProfit(stocksService.returnCurrentPrice(stocks, stock), stock['price']) | number: '0.2'}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <div *ngFor="let stock of stocks" class="card p-4 m-4">
+            <h1 class="section-title d-flex flex-row align-items-center justify-content-between">
+                <span>
+                    {{stock.name}}'<span *ngIf="stock.name.slice(-1) != 's'">s</span> ({{stock.symbol}}) Prices 
+                </span>
+                <span>
+                    <i (click)="stock.isOpen = !stock.isOpen" *ngIf="!stock.isOpen" class="fa fa-chevron-down pointer"></i>
+                    <i (click)="stock.isOpen = !stock.isOpen" *ngIf="stock.isOpen" class="fa fa-chevron-up pointer"></i>    
+                </span>
+            </h1>
+            <div *ngIf="stock.isOpen" style="width: 100%; margin: auto;">
+                <p-chart type="line" [data]="stock.graph"></p-chart>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="user.portfolioID.length == 0 || userService.isAdminUser(user.email)" class="mt-5 d-flex flex-row align-items-center justify-content-center">
+        <h1 class="text-danger text-center"><i class="fa fa-frown"></i> You have landed somewhere where you shouldn't be.  Go somwhere else, please.</h1>
+    </div>
+</div>

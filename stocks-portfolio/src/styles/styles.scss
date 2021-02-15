@@ -1,0 +1,107 @@
+$accent: #00ccfd;
+$dark: #1e2126;
+$white: #ffffff;
+$black: #000000;
+$gray: #333333;
+
+@import 'login';
+@import 'navbar';
+@import 'footer';
+
+html {
+    font-size: 10px;
+    
+    & body, .p-component {
+        font-family: 'Montserrat';
+    }
+
+    & .p-datatable-scrollable-body {
+        
+        &::-webkit-scrollbar {
+            display: none;
+        }  
+    }
+    
+    .p-datatable-scrollable-header-box {
+        padding: 0 !important;
+    }
+
+    & .p-toast {
+        width: 50% !important;
+    }
+
+    & h1, p {
+        margin: 0;
+    }
+
+    & .row {
+        margin: 0 !important;
+    }
+
+    & .router-outlet {
+        min-height: 100vh;
+    }
+
+    & .third-page-section {
+        width: 75%;
+        margin: auto;
+        padding: 2.5rem;
+    }
+
+    & .section-title {
+        font-size: 2rem;
+        color: $dark;
+        padding-bottom: 2rem;
+        margin-bottom: 2rem;
+        border-bottom: 2px solid $accent;
+    }
+
+    & .pointer {
+        cursor: pointer;
+    }
+
+    & .selectedUser {
+        background-color: $dark;
+        color: $accent;
+    }
+
+    & .accent {
+        color: $accent;
+    }
+
+    & .dark {
+        color: $dark;
+    }
+
+    & .gray {
+        color: $gray;
+    }
+
+    & .white {
+        color: $white;
+    }
+
+    .dark-background {
+        background: $dark !important;
+        color: $accent !important;
+    }
+    
+    & button {
+        border-radius: none;
+        border: none;
+        box-shadow: none;
+        outline: none;
+
+        &:focus {
+            box-shadow: none;
+            border: none;
+            outline: none;
+        }
+    }
+}
+
+@media(max-width: 768px) {
+    .p-toast {
+        width: 100% !important;
+    }
+}

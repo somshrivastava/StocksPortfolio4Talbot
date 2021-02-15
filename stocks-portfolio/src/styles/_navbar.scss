@@ -1,0 +1,100 @@
+.navbar {
+    border-bottom: 2px solid $dark;
+    padding: 0.75rem 2rem;
+    background: $black;
+    position: sticky;
+    z-index: 1000;
+    width: 100%;
+    left: 0;
+    top: 0;
+
+    &-brand {
+        font-size: 2rem;
+        width: 15rem;
+    }
+
+    &-toggler {
+        font-size: 3rem;
+        color: $accent;
+        width: auto;
+
+        &:focus {
+            box-shadow: none;
+            color: $accent;
+            outline: none;
+            border: none;
+        }
+
+        &:hover {
+            background: none;
+        }
+    }
+
+    &-collapse {
+
+        & .navbar-nav {
+
+            & .nav-item {
+                justify-content: center;
+                flex-direction: row;
+                align-items: center;
+                text-align: center;
+                display: flex;
+                
+                &:not(:last-child) {
+                    margin-right: 1rem;
+                }
+
+                & .nav-link {
+                    transition: all 0.25s ease-in-out;
+                    text-transform: uppercase;
+                    font-size: 1.2rem;
+                    font-weight: bold;
+                    color: $accent;
+
+                    &:hover {
+                        cursor: pointer;
+                        color: $white;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 992px) {
+    .navbar {
+        padding: 1rem 2rem;
+
+        &-collapse {
+
+            & .navbar-nav {
+                border-top: 1px solid $gray;
+                margin-top: 1.5rem;
+                padding-top: 1.5rem;
+                
+                & .nav-item {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: flex-start;
+
+                    &:not(:last-child) {
+                        margin-right: 0;
+                        margin-bottom: 1.5rem;
+                    }    
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 550px) {
+    
+    .navbar {
+
+        &-brand {
+            font-size: 2rem;
+        }
+    }
+}

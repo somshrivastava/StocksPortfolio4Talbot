@@ -1,0 +1,150 @@
+<div *ngIf="!isLoaded" class="mt-5 d-flex flex-row align-items-center justify-content-center">
+    <p-progressSpinner></p-progressSpinner>
+</div>
+<div *ngIf="isLoaded">
+    <div *ngIf="user.portfolioID.length != 0">
+        <div class="card m-4 p-4">
+            <h1 class="section-title">Who Is Winning The Contest?</h1>
+            <p-table dataKey="email" scrollHeight="100rem" [scrollable]="true" [value]="scoreboard" [rowHover]="true">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="dark-background" *ngIf="userService.isAdminUser(user.email)" style="width: 3rem;"></th>
+                        <th class="dark-background" style="width: 3rem;"></th>
+                        <th class="dark-background" style="width: 100%;">
+                            <span> 
+                                Student Name
+                            </span>
+                        </th>
+                        <th class="dark-background" style="width: 100%;">
+                            <span>
+                                Student Email
+                            </span>
+                        </th>
+                        <th class="dark-background" style="width: 100%;">
+                            <span>
+                                Student Profits
+                            </span>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-index="rowIndex" let-expanded="expanded" let-scoreboardUser>
+                    <tr [pReorderableRow]="index">
+                        <td *ngIf="userService.isAdminUser(user.email)" style="width: 3rem;">
+                            <i (click)="deleteStock(scoreboardUser)" class="fa fa-trash text-danger"></i>
+                        </td>
+                        <td style="width: 3rem;">
+                            <button type="button" pButton pRipple [pRowToggler]="scoreboardUser" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                        </td>
+                        <td style="width: 100%;">
+                            {{scoreboardUser['name']}}
+                        </td>
+                        <td style="width: 100%;">
+                            {{scoreboardUser['email']}}
+                        </td>
+                        <td style="width: 100%;">
+                            ${{scoreboardUser['profits'] | number: '0.2'}}
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="rowexpansion" let-scoreboardUser>
+                    <tr>
+                        <td style="width: 100%;" colspan="7">
+                            <div class="p-p-3">
+                                <p-table dataKey="name" scrollHeight="100rem" [scrollable]="true" [rows]="10" [value]="scoreboardUser.stocks" [rowHover]="true">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th *ngIf="userService.isAdminUser(user.email)" style="width: 2rem;"></th>
+                                            <th style="width: 10rem;">
+                                                <span>
+                                                    Stock
+                                                </span>
+                                            </th>
+                                            <th style="width: 10rem;">
+                                                <span>
+                                                    Symbol
+                                                </span>
+                                            </th>
+                                            <th style="width: 10rem;">
+                                                <span>
+                                                    Buy Price
+                                                </span>
+                                            </th>
+                                            <th style="width: 10rem;">
+                                                <span>
+                                                    Shares
+                                                </span>
+                                            </th>
+                                            <th style="width: 10rem;">
+                                                <span>
+                                                    Current Price
+                                                </span>
+                                            </th>
+                                            <th style="width: 10rem;">
+                                                <span>
+                                                    Current Profit
+                                                </span>
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-index="rowIndex" let-stock>
+                                        <tr [pReorderableRow]="index">
+                                            <td *ngIf="userService.isAdminUser(user.email)" style="width: 2rem;">
+                                                <i (click)="editingStock(stock)" class="fa fa-pencil text-primary"></i>
+                                            </td>
+                                            <td style="width: 10rem;">
+                                                {{stock['name']}}
+                                            </td>
+                                            <td style="width: 10rem;">
+                                                {{stock['symbol']}}
+                                            </td>
+                                            <td style="width: 10rem;">
+                                                ${{stock['price']}}
+                                            </td>
+                                            <td style="width: 10rem;">
+                                                {{stocksService.returnShares(stock['price']) | number: '0.2'}}
+                                            </td>
+                                            <td style="width: 10rem;">
+                                                ${{stocksService.returnCurrentPrice(scoreboardUser.stocks, stock) | number: '0.2'}}
+                                            </td>
+                                            <td style="width: 10rem;">
+                                                ${{stocksService.returnCurrentProfit(stocksService.returnCurrentPrice(scoreboardUser.stocks, stock), stock['price']) | number: '0.2'}}
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <p-dialog [(visible)]="isShowingDialog" [style]="{'width': '50%'}" header="Stock Details" [modal]="true" styleClass="p-fluid">
+            <ng-template pTemplate="content">
+                <div>
+                    <div class="p-field mb-3">
+                        <label>Stock</label>
+                        <input [(ngModel)]="currentStock.name" type="text" pInputText> 
+                    </div>
+                    <div class="p-field mb-3">
+                        <label>Symbol</label>
+                        <input [(ngModel)]="currentStock.symbol" type="text" pInputText> 
+                    </div>
+                    <div class="p-field mb-3">
+                        <label>Buy Price</label>
+                        <p-inputNumber [(ngModel)]="currentStock.price" currency="USD" mode="currency" inputId="currency-us" locale="en-US"></p-inputNumber>
+
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <div class="py-3">
+                    <button pButton pRipple label="Cancel" (click)="hideDialog()" icon="pi pi-times" class="p-button-outlined"></button>
+                    <button pButton pRipple label="Save" (click)="editStock()" icon="pi pi-check" class="p-button-outlined"></button>
+                </div>
+            </ng-template>
+        </p-dialog>
+    </div>
+    <div *ngIf="user.portfolioID.length == 0" class="mt-5 d-flex flex-row align-items-center justify-content-center">
+        <h1 class="text-danger"><i class="fa fa-frown"></i> You have landed somewhere where you shouldn't be.  Go somwhere else, please.</h1>
+    </div>
+</div>
