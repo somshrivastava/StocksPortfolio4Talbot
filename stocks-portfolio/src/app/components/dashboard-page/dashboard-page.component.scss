@@ -1,0 +1,10 @@
+.graph {
+    width: 75%;
+    margin: auto;
+}
+
+@media(max-width: 768px) {
+    .graph {
+        width: 100%;
+    }
+}

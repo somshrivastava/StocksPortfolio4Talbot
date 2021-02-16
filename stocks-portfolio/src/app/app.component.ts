@@ -47,8 +47,8 @@ export class AppComponent implements OnInit, OnDestroy {
       if (user) {
         this.user = user;
         this.routingHistoryService.loadRouting();
-        if (!this.userService.isAdminUser(this.user['email']) && this.user['portfolioID'].length != 0) {
-          this.stocksService.isUpdatedStocksData(this.user);
+        if (!this.userService.isAdminUser(this.user['email']) && this.user['portfolioID'].length != 0  && !this.user["isCreatingPortfolio"]) {
+          // this.stocksService.isUpdatedStocksData(this.user);
         }
       }
     })

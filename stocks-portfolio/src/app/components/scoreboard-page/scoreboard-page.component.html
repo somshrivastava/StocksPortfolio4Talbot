@@ -8,7 +8,7 @@
             <p-table dataKey="email" scrollHeight="100rem" [scrollable]="true" [value]="scoreboard" [rowHover]="true">
                 <ng-template pTemplate="header">
                     <tr>
-                        <th class="dark-background" *ngIf="userService.isAdminUser(user.email)" style="width: 3rem;"></th>
+                        <!-- <th class="dark-background" *ngIf="userService.isAdminUser(user.email)" style="width: 3rem;"></th> -->
                         <th class="dark-background" style="width: 3rem;"></th>
                         <th class="dark-background" style="width: 100%;">
                             <span> 
@@ -29,9 +29,9 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-index="rowIndex" let-expanded="expanded" let-scoreboardUser>
                     <tr [pReorderableRow]="index">
-                        <td *ngIf="userService.isAdminUser(user.email)" style="width: 3rem;">
+                        <!-- <td *ngIf="userService.isAdminUser(user.email)" style="width: 3rem;">
                             <i (click)="deleteStock(scoreboardUser)" class="fa fa-trash text-danger"></i>
-                        </td>
+                        </td> -->
                         <td style="width: 3rem;">
                             <button type="button" pButton pRipple [pRowToggler]="scoreboardUser" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
                         </td>

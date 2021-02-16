@@ -4,7 +4,7 @@
 <div *ngIf="isLoaded">
     <div *ngIf="user.portfolioID.length != 0 && !userService.isAdminUser(user.email)">
         <div class="card m-4 p-4">
-            <h3 class="mb-3 text-danger"><i class="fas fa-exclamation-triangle"></i> Please Note: All Prices Shown Are Of The Previous Close!</h3>
+            <h3 class="mb-3 text-danger"><i class="fas fa-exclamation-triangle"></i> Please Note: The Latest Price Shown Is Of The Previous Close!</h3>
         </div>
         <div class="card m-4 p-4">
             <h3 *ngIf="stocksService.returnTotalProfit(stocks) < 0" class="mb-3 text-danger"><i class="fa fa-frown"></i> So sorry for your loss, it seems you're losing money as of now.</h3>
@@ -82,7 +82,7 @@
                     <i (click)="stock.isOpen = !stock.isOpen" *ngIf="stock.isOpen" class="fa fa-chevron-up pointer"></i>    
                 </span>
             </h1>
-            <div *ngIf="stock.isOpen" style="width: 100%; margin: auto;">
+            <div *ngIf="stock.isOpen" class="graph">
                 <p-chart type="line" [data]="stock.graph"></p-chart>
             </div>
         </div>

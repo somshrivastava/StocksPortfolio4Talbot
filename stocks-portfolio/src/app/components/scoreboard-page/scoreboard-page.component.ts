@@ -83,9 +83,11 @@ export class ScoreboardPageComponent implements OnInit, OnDestroy {
   loadScoreboard() {
     this.scoreboard = [];
     this.users.forEach(user => {
-      if (!this.userService.isAdminUser(user['email'])  && user['portfolioID'].length != 0) {
-        const filteredStockCollection = this.stocksCollection.filter(stock => stock['portfolioID'] == user['portfolioID'])[0]['stocks'];
-        this.scoreboard.push({...user, profits: this.stocksService.returnTotalProfit(filteredStockCollection), stocks: filteredStockCollection})
+      if (!this.userService.isAdminUser(user['email'])  && user['portfolioID'].length != 0 && !user['isCreatingPortfolio']) {
+        if (this.stocksCollection.filter(stock => stock['portfolioID'] == user['portfolioID'])[0] != undefined) {
+          const filteredStockCollection = this.stocksCollection.filter(stock => stock['portfolioID'] == user['portfolioID'])[0]['stocks'];
+          this.scoreboard.push({...user, profits: this.stocksService.returnTotalProfit(filteredStockCollection), stocks: filteredStockCollection})  
+        }
       }
     })
     this.scoreboard.sort((a, b) => parseFloat(b.profits) - parseFloat(a.profits));

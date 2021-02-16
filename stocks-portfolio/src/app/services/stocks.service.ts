@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { UserService } from './user.service';
 import { Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from './data.service';
@@ -16,10 +18,27 @@ export class StocksService {
 
   private apiKey: string = "Q0B2USQT39UVSGXJ";
 
+  private apiKeys: string[] = [
+    "Q0B2USQT39UVSGXJ",
+    "YSAP072807OHJYEN",
+    "0UNA20MCF3VG3Q3S",
+    "RYSDNDZ9JVWX31QF",
+    "2HSJQ73ZB5TRLVNJ",
+    "92TSPXM2FE1WAS2H",
+    "UHEORWTP71E818RZ",
+    "XA63A1JQPT0JNMHE",
+    "QWCPK4BFHDKBASQN",
+    "I06PQA6YMUS9Q1WA"
+  ];
+
+  selectedAPIKey: number = 0;
+
   private subscriptions: Subscription = new Subscription();
 
   constructor(
     private dataService: DataService,
+    private userService: UserService,
+    private router: Router,
     private http: HttpClient
   ) { }
 
@@ -29,7 +48,7 @@ export class StocksService {
 
   public returnCurrentPrice(stocks: any[], stock: any) {
     var currentPrice = 0;
-    if (stocks != undefined && stocks != null) {
+    if (stocks != undefined && stocks != null  && stock['data'] != null && stock['data'] != undefined) {
       currentPrice = stock['data'][Object.keys(stock['data']).sort()[Object.keys(stock['data']).length - 1]]['4. close'];
     }
     return currentPrice;
@@ -56,8 +75,11 @@ export class StocksService {
       if (stock.data == null || stock.data == undefined || stock.data.length == 0) {
         this.subscriptions.add(
           this.http.get(this.returnStockAPIURL(stock['symbol'])).subscribe((stockData: any) => {
-            if (stockData['Note'] != undefined && stockData['Note'] != null) {
-              this.dataService.sendToastMessage({severity:'warn', sticky: true, summary:'1 Minute Wait Time', detail:'Please Wait One Minute.  There Is A Limit To The Number Of Calls That Can Be Made To The API Per Minute.  Thank you!'});
+            if (stockData['Error Message'] != undefined && stockData['Error Message'] != null) {
+              this.router.navigate(['create-portfolio', 'invalid-details']);        
+              this.subscriptions.unsubscribe();
+            } else if (stockData['Note'] != undefined && stockData['Note'] != null) {
+              this.dataService.sendToastMessage({severity:'warn', sticky: true, summary:'Wait Time', detail:'Please Wait.  There Is A Limit To The Number Of Calls That Can Be Made To The Free API Per Minute.  Do Not Reload The Page Or Navigate Anywhere!  Thank you!'});
               this.apiWaitTime = setTimeout(() => {
                 window.location.reload();
               }, 60000);
@@ -68,6 +90,7 @@ export class StocksService {
                 clearTimeout(this.apiWaitTime);
                 this.dataService.clearToastMessage();
                 this.subscriptions.unsubscribe();
+                this.dataService.createStorageKey("isCreatingPortfolio", false);
                 this.dataService.createFirestoreDocumentWithID("stocks", portfolioID, {portfolioID: portfolioID, stocks: stocks});          
                 if (isLoaded != null) {
                   isLoaded = true;
@@ -131,7 +154,6 @@ export class StocksService {
         userStocks['stocks'].forEach((stock: Stock) => {
           stock.data = undefined;
         })
-        console.log("na")
         this.loadUserStocksData(userStocks['stocks'], userStocks['portfolioID']);        
       }
     })

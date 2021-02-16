@@ -79,6 +79,7 @@ export class AuthenticationService {
           }
           this.dataService.createFirestoreDocumentWithID("users", this.user.userID, this.user);
         }
+        // this.subscription.unsubscribe();
       })
     )
   }

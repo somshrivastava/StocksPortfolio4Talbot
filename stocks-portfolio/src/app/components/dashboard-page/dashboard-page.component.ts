@@ -23,6 +23,8 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   private totalProfit: number = 0;
 
+  private updatedUser: boolean = false;;
+
   private subscriptions: Subscription = new Subscription();
 
   constructor(
@@ -72,9 +74,17 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
             return document.payload.doc.data()
           })[0]['portfolioID'];
           const filteredStocks = this.stocks.filter((stock: Stock) => stock.data == null || stock.data == undefined); 
+          console.log(filteredStocks, "Filter")
           if (filteredStocks.length != 0) {
-            this.stocksService.loadUserStocksData(this.stocks, this.portfolioID, this.isLoaded);            
+            this.stocksService.loadUserStocksData(this.stocks, this.portfolioID, this.isLoaded);    
           } else {
+            if (!this.updatedUser) {
+              this.user['isCreatingPortfolio'] = false;
+              this.dataService.updateFirestoreDocument("users", this.user['userID'], this.user);
+              this.userService.user$.next(this.user);
+              this.updatedUser = true;
+            }
+            console.log(this.stocks, "Done")
             this.isLoaded = true;
             this.stocks.forEach((stock: Stock) => {
               this.stocksService.generateStockGraphs(this.stocks, stock);

@@ -10,6 +10,7 @@ const routes: Routes = [
   {path: '', redirectTo:'login', pathMatch: 'full'},
   {path: 'login', component: LoginPageComponent},
   {path: 'create-portfolio', component: CreatePortfolioPageComponent},
+  {path: 'create-portfolio/invalid-details', component: CreatePortfolioPageComponent},
   {path: 'dashboard', component: DashboardPageComponent},
   {path: 'scoreboard', component: ScoreboardPageComponent},
   {path: '404', component: NotFoundPageComponent},
