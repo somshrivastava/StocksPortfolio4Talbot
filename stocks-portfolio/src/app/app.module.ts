@@ -5,7 +5,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 
-import { environment } from './../environments/environment.staging';
+import { environment } from './../environments/environment.prod';
 
 import { AppComponent } from './app.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
