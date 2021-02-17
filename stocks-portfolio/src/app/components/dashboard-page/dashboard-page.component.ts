@@ -73,11 +73,10 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
           this.portfolioID = collection.map(document => {
             return document.payload.doc.data()
           })[0]['portfolioID'];
-          if (!this.userService.isAdminUser(this.user['email']) && this.user['portfolioID'].length != 0  && !this.user["isCreatingPortfolio"]) {
-            this.stocksService.isUpdatedStocksData(this.user);
-          }  
           const filteredStocks = this.stocks.filter((stock: Stock) => stock.data == null || stock.data == undefined); 
-          if (filteredStocks.length == 0) {
+          if (filteredStocks.length != 0) {
+            this.stocksService.loadUserStocksData(this.stocks, this.portfolioID, this.isLoaded);    
+          } else {
             if (!this.updatedUser) {
               this.user['isCreatingPortfolio'] = false;
               this.dataService.updateFirestoreDocument("users", this.user['userID'], this.user);

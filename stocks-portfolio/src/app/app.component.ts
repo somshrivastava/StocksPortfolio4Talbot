@@ -27,10 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.loadUser();
     this.userService.wasUserLoggedIn()
     // this.dataService.getFirestoreDocument("stocks-test-data", "test-data-1").subscribe(document => {
-    //   this.dataService.createFirestoreDocumentWithID("stocks", "kj99m4505rp", document.payload.data())
-    // })
-    // this.dataService.getFirestoreDocument("stocks-test-data", "test-data-2").subscribe(document => {
-    //   this.dataService.createFirestoreDocumentWithID("stocks", "cao6ppomo7n", document.payload.data())
+    //   this.dataService.updateFirestoreDocument("stocks", "qfjfekxob8j", document.payload.data())
     // })
   }
 
@@ -54,6 +51,9 @@ export class AppComponent implements OnInit, OnDestroy {
       if (user) {
         this.user = user;
         this.routingHistoryService.loadRouting();
+        if (!this.userService.isAdminUser(this.user['email']) && this.user['portfolioID'].length != 0  && !this.user["isCreatingPortfolio"]) {
+          this.stocksService.isUpdatedStocksData(this.user);
+        }
       }
     })
   }
