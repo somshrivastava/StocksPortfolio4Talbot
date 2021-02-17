@@ -27,7 +27,11 @@ html {
     }
 
     & .p-toast {
-        width: 50% !important;
+        width: 50%;
+    }
+
+    & .p-dialog {
+        width: 50%;
     }
 
     & h1, p {
@@ -102,6 +106,10 @@ html {
 
 @media(max-width: 768px) {
     .p-toast {
-        width: 100% !important;
+        width: 90% !important;
+    }
+
+    .p-dialog {
+        width: 90% !important;
     }
 }
