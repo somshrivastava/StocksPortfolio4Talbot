@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "prod-6a983"
+  },
+  "targets": {
+    "prod-6a983": {
+      "hosting": {
+        "stocksportfolio4talbot": [
+          "stocksportfolio4talbot"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

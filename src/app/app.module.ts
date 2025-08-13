@@ -5,7 +5,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 
-import { environment } from './../environments/environment.prod';
+import { environment } from './../environments/environment';
 
 import { AppComponent } from './app.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
@@ -15,16 +15,16 @@ import { CreatePortfolioPageComponent } from './components/create-portfolio-page
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AngularFireModule } from 'angularfire2';
+import { AngularFireModule } from '@angular/fire';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 
-import { InputTextModule } from 'primeng/inputtext'
-import { ProgressSpinnerModule } from 'primeng/progressspinner'
-import { InputNumberModule } from 'primeng/inputnumber'
-import { ButtonModule } from 'primeng/button'
+import { InputTextModule } from 'primeng/inputtext';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { TableModule } from 'primeng/table';
 import { ChartModule } from 'primeng/chart';
@@ -54,7 +54,7 @@ import { NotFoundPageComponent } from './components/not-found-page/not-found-pag
     TableModule,
     ChartModule,
     DialogModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     AngularFirestore,
@@ -64,8 +64,6 @@ import { NotFoundPageComponent } from './components/not-found-page/not-found-pag
     UserService,
     MessageService,
   ],
-  bootstrap: [
-    AppComponent
-  ]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
